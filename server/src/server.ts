@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import artistRoutes from "./routes/artists.routes";
+import usersRoutes from "./routes/users.routes";
 import "./config/db";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/artists", artistRoutes);
+app.use("/api/users", usersRoutes);
 
 app.get("/", (_req, res) => {
   res.send("My AMS API running");
