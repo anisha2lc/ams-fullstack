@@ -48,6 +48,14 @@ class AuthController {
     });
   };
 
+  public logout = async (_req: Request, res: Response): Promise<void> => {
+    // JWT is stateless; frontend should simply delete the token.
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  };
+
   public getCurrentUser = async (
     req: AuthRequest,
     res: Response,

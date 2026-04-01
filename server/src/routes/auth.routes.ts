@@ -21,4 +21,6 @@ router.post("/refresh", authController.refresh);
 
 router.get("/me", verifyJWT, authController.getCurrentUser);
 
+router.post("/logout", authController.logout);
+
 export default router;

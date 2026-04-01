@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes";
 import artistRoutes from "./routes/artists.routes";
 import usersRoutes from "./routes/users.routes";
 import "./config/db";
+import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
 
 dotenv.config();
 
@@ -25,6 +26,9 @@ app.use("/api/users", usersRoutes);
 app.get("/", (_req, res) => {
   res.send("My AMS API running");
 });
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
