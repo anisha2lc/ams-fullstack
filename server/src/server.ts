@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+dotenv.config();
 import authRoutes from "./routes/auth.routes";
 import artistRoutes from "./routes/artists.routes";
 import usersRoutes from "./routes/users.routes";
 import "./config/db";
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
-
-dotenv.config();
 
 const app = express();
 const port = Number(process.env.PORT) || 5000;
