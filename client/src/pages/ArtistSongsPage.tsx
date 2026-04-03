@@ -129,14 +129,14 @@ export function ArtistSongsPage() {
   const artist = artistQuery.data;
   const rows = songsQuery.data?.data.map((s) => (
     <Table.Tr key={s.id}>
-      <Table.Td>{s.id}</Table.Td>
+      <Table.Td className="hidden sm:table-cell">{s.id}</Table.Td>
       <Table.Td>{s.title}</Table.Td>
       <Table.Td>{s.album_name}</Table.Td>
       <Table.Td>{s.genre}</Table.Td>
       <Table.Td>
         {canEdit ? (
           <Group gap="xs" justify="flex-end">
-            <ActionIcon variant="subtle" color="indigo" onClick={() => openEdit(s)}>
+            <ActionIcon variant="subtle" color="teal" onClick={() => openEdit(s)}>
               <IconEdit size={18} />
             </ActionIcon>
             <ActionIcon
@@ -165,56 +165,74 @@ export function ArtistSongsPage() {
   ));
 
   return (
-    <Stack gap="lg">
-      <Group justify="space-between" align="flex-start">
-        <div>
-          <Anchor component={Link} to="/dashboard?tab=artists" size="sm" mb="xs" inline>
-            <Group gap={6}>
-              <IconArrowLeft size={16} />
-              Back to artists
-            </Group>
-          </Anchor>
-          <Title order={3} className="text-slate-800">
-            Songs
-            {artist ? (
-              <Text span inherit fw={400} c="dimmed" size="lg" ml="xs">
-                — {artist.name}
+    <div className="mx-auto w-full max-w-[1400px]">
+      <div className="rounded-xl border border-zinc-200/80 bg-white/90 p-4 shadow-lg shadow-zinc-900/5 backdrop-blur-xl sm:rounded-2xl sm:p-6 lg:p-7">
+        <Stack gap="lg">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <Anchor
+                component={Link}
+                to="/dashboard?tab=artists"
+                className="mb-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-teal-700 hover:text-teal-800 sm:min-h-0"
+              >
+                <IconArrowLeft size={16} />
+                Back to artists
+              </Anchor>
+              <Title order={2} className="text-zinc-900 tracking-tight">
+                Songs
+                {artist ? (
+                  <Text span inherit fw={500} className="text-zinc-500" size="lg" ml="xs">
+                    — {artist.name}
+                  </Text>
+                ) : null}
+              </Title>
+              <Text size="sm" className="mt-2 max-w-prose text-zinc-600">
+                Create and organize tracks for this artist. Genres are validated against the API enum.
               </Text>
-            ) : null}
-          </Title>
-        </div>
-        {canEdit && (
-          <Button color="indigo" onClick={() => setCreateOpen(true)}>
-            Add song
-          </Button>
-        )}
-      </Group>
+            </div>
+            {canEdit && (
+              <Button color="teal" radius="md" size="md" onClick={() => setCreateOpen(true)} className="min-h-11 shrink-0 font-semibold shadow-md shadow-teal-600/15 sm:min-h-0">
+                Add song
+              </Button>
+            )}
+          </div>
 
-      {artistQuery.isError && (
-        <Text c="red" size="sm">
-          {getErrorMessage(artistQuery.error)}
-        </Text>
-      )}
-      {songsQuery.isError && (
-        <Text c="red" size="sm">
-          {getErrorMessage(songsQuery.error)}
-        </Text>
-      )}
+          {artistQuery.isError && (
+            <div className="rounded-xl border border-red-200 bg-red-50/90 px-4 py-3 text-sm text-red-800">
+              {getErrorMessage(artistQuery.error)}
+            </div>
+          )}
+          {songsQuery.isError && (
+            <div className="rounded-xl border border-red-200 bg-red-50/90 px-4 py-3 text-sm text-red-800">
+              {getErrorMessage(songsQuery.error)}
+            </div>
+          )}
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
-        <Table striped highlightOnHover verticalSpacing="sm">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>ID</Table.Th>
-              <Table.Th>Title</Table.Th>
-              <Table.Th>Album</Table.Th>
-              <Table.Th>Genre</Table.Th>
-              <Table.Th style={{ width: 120 }} />
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{songsQuery.isLoading ? null : rows}</Table.Tbody>
-        </Table>
-      </div>
+          <div className="-mx-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm sm:mx-0 sm:rounded-2xl">
+            <div className="overflow-x-auto overscroll-x-contain touch-pan-x">
+              <Table
+                striped
+                highlightOnHover
+                verticalSpacing="md"
+                horizontalSpacing="md"
+                classNames={{
+                  thead:
+                    "bg-zinc-50/95 [&_th]:font-semibold [&_th]:text-zinc-600 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wider",
+                }}
+              >
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th className="hidden sm:table-cell">ID</Table.Th>
+                    <Table.Th>Title</Table.Th>
+                    <Table.Th>Album</Table.Th>
+                    <Table.Th>Genre</Table.Th>
+                    <Table.Th style={{ width: 120 }} />
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>{songsQuery.isLoading ? null : rows}</Table.Tbody>
+              </Table>
+            </div>
+          </div>
 
       {songsQuery.data && songsQuery.data.pagination.totalPages > 1 && (
         <Group justify="center">
@@ -222,7 +240,7 @@ export function ArtistSongsPage() {
             total={songsQuery.data.pagination.totalPages}
             value={page}
             onChange={setPage}
-            color="indigo"
+            color="teal"
           />
         </Group>
       )}
@@ -233,7 +251,7 @@ export function ArtistSongsPage() {
             <TextInput label="Title" required {...createForm.getInputProps("title")} />
             <TextInput label="Album" required {...createForm.getInputProps("album_name")} />
             <Select label="Genre" data={genreOptions} {...createForm.getInputProps("genre")} />
-            <Button type="submit" loading={createMutation.isPending} color="indigo">
+            <Button type="submit" loading={createMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
               Create
             </Button>
           </Stack>
@@ -251,12 +269,14 @@ export function ArtistSongsPage() {
             <TextInput label="Title" required {...editForm.getInputProps("title")} />
             <TextInput label="Album" required {...editForm.getInputProps("album_name")} />
             <Select label="Genre" data={genreOptions} {...editForm.getInputProps("genre")} />
-            <Button type="submit" loading={updateMutation.isPending} color="indigo">
+            <Button type="submit" loading={updateMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
               Save changes
             </Button>
           </Stack>
         </form>
       </Modal>
-    </Stack>
+        </Stack>
+      </div>
+    </div>
   );
 }

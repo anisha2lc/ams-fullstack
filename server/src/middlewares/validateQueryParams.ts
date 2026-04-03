@@ -17,7 +17,6 @@ export const validateQuery = (schema: ZodSchema) => {
       return;
     }
 
-    req.query = result.data as Request["query"];
     next();
   };
 };

@@ -38,21 +38,31 @@ export function LoginPage() {
   });
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6">
+    <div className="relative flex min-h-[100dvh] items-center justify-center overflow-x-hidden overflow-y-auto px-4 py-8 sm:p-6">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-24 top-10 h-64 w-64 rounded-full bg-teal-400/20 blur-3xl sm:h-72 sm:w-72" />
+        <div className="absolute -right-20 bottom-5 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl sm:bottom-10 sm:h-80 sm:w-80" />
+      </div>
+
       <Paper
-        className="w-full max-w-md border border-slate-200/80 bg-white/90 shadow-xl shadow-indigo-100/50 backdrop-blur-sm"
-        radius="lg"
+        className="relative w-full max-w-md border border-zinc-200/80 bg-white/95 shadow-xl shadow-zinc-900/10 backdrop-blur-xl"
+        radius="xl"
         p="xl"
         withBorder
       >
-        <Stack gap="md">
-          <div>
-            <Title order={2} className="text-slate-800">
-              Admin sign in
-            </Title>
-            <Text size="sm" c="dimmed" mt={4}>
-              Access the artist management dashboard.
-            </Text>
+        <Stack gap="lg">
+          <div className="flex items-start gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-emerald-600 text-base font-black text-white shadow-lg shadow-teal-600/25 sm:h-12 sm:w-12 sm:text-lg">
+              A
+            </div>
+            <div>
+              <Title order={2} className="text-zinc-900 tracking-tight">
+                Admin sign in
+              </Title>
+              <Text size="sm" className="mt-1 text-zinc-600 leading-relaxed">
+                Sign in to manage users, artists, and song catalogs.
+              </Text>
+            </div>
           </div>
           <form onSubmit={handleSubmit}>
             <Stack gap="sm">
@@ -70,14 +80,14 @@ export function LoginPage() {
                 key={form.key("password")}
                 {...form.getInputProps("password")}
               />
-              <Button type="submit" fullWidth mt="xs" color="indigo">
+              <Button type="submit" fullWidth mt="md" size="md" radius="md" color="teal" className="min-h-11 font-semibold shadow-md shadow-teal-600/20">
                 Sign in
               </Button>
             </Stack>
           </form>
-          <Text size="sm" ta="center" c="dimmed">
+          <Text size="sm" ta="center" className="text-zinc-500">
             New admin?{" "}
-            <Anchor component={Link} to="/register" size="sm" fw={500}>
+            <Anchor component={Link} to="/register" size="sm" fw={600} className="text-teal-700">
               Create an account
             </Anchor>
           </Text>

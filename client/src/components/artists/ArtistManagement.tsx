@@ -147,7 +147,7 @@ export function ArtistManagement() {
 
   const rows = data?.data.map((a) => (
     <Table.Tr key={a.id}>
-      <Table.Td>{a.id}</Table.Td>
+      <Table.Td className="hidden sm:table-cell">{a.id}</Table.Td>
       <Table.Td>{a.name}</Table.Td>
       <Table.Td>{a.first_release_year}</Table.Td>
       <Table.Td>{a.no_of_albums_released}</Table.Td>
@@ -157,7 +157,7 @@ export function ArtistManagement() {
           to={`/dashboard/artists/${a.id}/songs`}
           size="xs"
           variant="light"
-          color="indigo"
+          color="teal"
           leftSection={<IconMusic size={14} />}
         >
           Songs
@@ -166,7 +166,7 @@ export function ArtistManagement() {
       <Table.Td>
         {canEdit ? (
           <Group gap="xs" justify="flex-end">
-            <ActionIcon variant="subtle" color="indigo" onClick={() => openEdit(a)}>
+            <ActionIcon variant="subtle" color="teal" onClick={() => openEdit(a)}>
               <IconEdit size={18} />
             </ActionIcon>
             <ActionIcon
@@ -195,57 +195,72 @@ export function ArtistManagement() {
   ));
 
   return (
-    <Stack gap="md">
-      <Group justify="space-between" align="flex-start" wrap="wrap">
-        <Text size="sm" c="dimmed" maw={480}>
-          Artists and metadata. Super admins can view; artist managers can create, import, and
-          export.
-        </Text>
-        <Group gap="sm">
+    <Stack gap="lg">
+      <div className="flex flex-col gap-4 rounded-xl border border-zinc-200/80 bg-gradient-to-br from-teal-50/40 via-white/90 to-emerald-50/25 p-4 shadow-sm sm:rounded-2xl sm:flex-row sm:items-start sm:justify-between sm:p-5">
+        <div className="max-w-xl min-w-0">
+          <Text fw={800} size="md" className="text-zinc-900">
+            Artist catalog
+          </Text>
+          <Text size="sm" className="mt-1 text-zinc-600 leading-relaxed">
+            Artists and metadata. Super admins can view; artist managers can create, import, and
+            export CSV.
+          </Text>
+        </div>
+        <Group gap="sm" wrap="wrap" className="w-full shrink-0 sm:w-auto [&_button]:min-h-11 sm:[&_button]:min-h-0">
           {canEdit && (
             <>
               <FileButton onChange={(file) => file && importMutation.mutate(file)} accept=".csv">
                 {(props) => (
-                  <Button {...props} variant="default" loading={importMutation.isPending}>
+                  <Button {...props} variant="default" radius="md" loading={importMutation.isPending} className="font-semibold">
                     Import CSV
                   </Button>
                 )}
               </FileButton>
               <Button
                 variant="default"
+                radius="md"
                 loading={exportMutation.isPending}
                 onClick={() => exportMutation.mutate()}
+                className="font-semibold"
               >
                 Export CSV
               </Button>
-              <Button color="indigo" onClick={() => setCreateOpen(true)}>
+              <Button color="teal" radius="md" size="md" onClick={() => setCreateOpen(true)} className="font-semibold shadow-md shadow-teal-600/15">
                 Add artist
               </Button>
             </>
           )}
         </Group>
-      </Group>
+      </div>
 
       {isError && (
-        <Text c="red" size="sm">
+        <div className="rounded-xl border border-red-200 bg-red-50/90 px-4 py-3 text-sm text-red-800">
           {getErrorMessage(error)}
-        </Text>
+        </div>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
-        <Table striped highlightOnHover verticalSpacing="sm">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>ID</Table.Th>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>First release</Table.Th>
-              <Table.Th>Albums</Table.Th>
-              <Table.Th>Songs</Table.Th>
-              <Table.Th style={{ width: 200 }} />
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{isLoading ? null : rows}</Table.Tbody>
-        </Table>
+      <div className="-mx-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm sm:mx-0 sm:rounded-2xl">
+        <div className="overflow-x-auto overscroll-x-contain touch-pan-x">
+          <Table
+            striped
+            highlightOnHover
+            verticalSpacing="md"
+            horizontalSpacing="md"
+            classNames={{ thead: "bg-zinc-50/95 [&_th]:font-semibold [&_th]:text-zinc-600 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wider" }}
+          >
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th className="hidden sm:table-cell">ID</Table.Th>
+                <Table.Th>Name</Table.Th>
+                <Table.Th>First release</Table.Th>
+                <Table.Th>Albums</Table.Th>
+                <Table.Th>Songs</Table.Th>
+                <Table.Th style={{ width: 200 }} />
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{isLoading ? null : rows}</Table.Tbody>
+          </Table>
+        </div>
       </div>
 
       {data && data.pagination.totalPages > 1 && (
@@ -254,7 +269,7 @@ export function ArtistManagement() {
             total={data.pagination.totalPages}
             value={page}
             onChange={setPage}
-            color="indigo"
+            color="teal"
           />
         </Group>
       )}
@@ -298,7 +313,7 @@ export function ArtistManagement() {
                 {...createForm.getInputProps("no_of_albums_released")}
               />
             </Group>
-            <Button type="submit" loading={createMutation.isPending} color="indigo">
+            <Button type="submit" loading={createMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
               Create
             </Button>
           </Stack>
@@ -349,7 +364,7 @@ export function ArtistManagement() {
                 {...editForm.getInputProps("no_of_albums_released")}
               />
             </Group>
-            <Button type="submit" loading={updateMutation.isPending} color="indigo">
+            <Button type="submit" loading={updateMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
               Save changes
             </Button>
           </Stack>

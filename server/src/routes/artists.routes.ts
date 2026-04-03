@@ -34,14 +34,14 @@ router.get(
 
 router.get(
   "/export",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   artistController.exportCSV,
 );
 
 router.post(
   "/import",
   upload.single("file"),
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   artistController.importCSV,
 );
 
@@ -80,19 +80,19 @@ router.get(
 
 router.post(
   "/:artistId/songs",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   artistController.createArtistSong,
 );
 
 router.put(
   "/:artistId/songs/:songId",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   artistController.updateArtistSong,
 );
 
 router.delete(
   "/:artistId/songs/:songId",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   artistController.deleteArtistSong,
 );
 

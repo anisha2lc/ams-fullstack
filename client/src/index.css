@@ -1,16 +1,48 @@
+/* Mantine component styles (required — without this, buttons/tables/shell look “broken”) */
+@import "@mantine/core/styles.layer.css";
+@import "@mantine/notifications/styles.layer.css";
+
 @import "tailwindcss";
 
-:root {
-  font-family: "DM Sans", system-ui, sans-serif;
-  color-scheme: light;
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --radius-ams: 1rem;
+  --color-ams-surface: oklch(99% 0.004 264);
+  --color-ams-elevated: oklch(100% 0.006 264 / 0.82);
+  --shadow-ams-soft: 0 24px 80px -24px oklch(55% 0.18 264 / 0.2);
 }
 
+:root {
+  font-family: var(--font-sans);
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile-first: soft neutral base + teal tint (no heavy purple) */
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 45%, #f1f5f9 100%);
+  min-height: 100dvh;
+  background-color: #fafafa;
+  background-image:
+    radial-gradient(ellipse 100% 70% at 50% -15%, oklch(95% 0.06 180 / 0.35), transparent 52%),
+    radial-gradient(ellipse 80% 50% at 100% 0%, oklch(96% 0.04 160 / 0.3), transparent 45%),
+    linear-gradient(180deg, #fafafa 0%, #f4f4f5 55%, #ecfdf5 140%);
 }
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Mantine modal / overlay polish */
+.mantine-Modal-content {
+  @apply mx-3 max-h-[calc(100dvh-2rem)] overflow-y-auto border border-zinc-200/90 shadow-2xl shadow-zinc-900/10 sm:mx-auto;
+}
+
+/* Subtle scrollbars for table regions on Windows */
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(203 213 225) transparent;
 }
