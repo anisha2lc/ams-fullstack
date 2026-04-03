@@ -78,21 +78,31 @@ export function RegisterPage() {
   });
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 py-12">
+    <div className="relative flex min-h-[100dvh] items-center justify-center overflow-x-hidden overflow-y-auto px-4 py-8 sm:p-6 sm:py-12">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-24 top-12 h-72 w-72 rounded-full bg-teal-400/18 blur-3xl sm:h-80 sm:w-80" />
+        <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-cyan-400/12 blur-3xl sm:h-96 sm:w-96" />
+      </div>
+
       <Paper
-        className="w-full max-w-2xl border border-slate-200/80 bg-white/90 shadow-xl shadow-indigo-100/50 backdrop-blur-sm"
-        radius="lg"
+        className="relative w-full max-w-2xl border border-zinc-200/80 bg-white/95 shadow-xl shadow-zinc-900/10 backdrop-blur-xl"
+        radius="xl"
         p="xl"
         withBorder
       >
-        <Stack gap="md">
-          <div>
-            <Title order={2} className="text-slate-800">
-              Register admin
-            </Title>
-            <Text size="sm" c="dimmed" mt={4}>
-              Create your account, then sign in on the next screen.
-            </Text>
+        <Stack gap="lg">
+          <div className="flex items-start gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-600 text-base font-black text-white shadow-lg shadow-teal-600/25 sm:h-12 sm:w-12 sm:text-lg">
+              +
+            </div>
+            <div>
+              <Title order={2} className="text-zinc-900 tracking-tight">
+                Register admin
+              </Title>
+              <Text size="sm" className="mt-1 text-zinc-600 leading-relaxed">
+                Create your account, then sign in on the next screen.
+              </Text>
+            </div>
           </div>
           <form onSubmit={handleSubmit}>
             <Stack gap="sm">
@@ -167,14 +177,14 @@ export function RegisterPage() {
                 key={form.key("role")}
                 {...form.getInputProps("role")}
               />
-              <Button type="submit" fullWidth mt="xs" color="indigo">
+              <Button type="submit" fullWidth mt="md" size="md" radius="md" color="teal" className="min-h-11 font-semibold shadow-md shadow-teal-600/20">
                 Register
               </Button>
             </Stack>
           </form>
-          <Text size="sm" ta="center" c="dimmed">
+          <Text size="sm" ta="center" className="text-zinc-500">
             Already have an account?{" "}
-            <Anchor component={Link} to="/login" size="sm" fw={500}>
+            <Anchor component={Link} to="/login" size="sm" fw={600} className="text-teal-700">
               Sign in
             </Anchor>
           </Text>

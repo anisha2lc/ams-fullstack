@@ -9,7 +9,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (!ready) {
     return (
       <Center className="min-h-screen">
-        <Loader color="indigo" />
+        <Loader color="teal" />
       </Center>
     );
   }

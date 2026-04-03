@@ -128,14 +128,14 @@ export function UserManagement() {
   };
 
   const rows = data?.data.map((u) => (
-    <Table.Tr key={u.id}>
-      <Table.Td>{u.id}</Table.Td>
+      <Table.Tr key={u.id}>
+      <Table.Td className="hidden sm:table-cell">{u.id}</Table.Td>
       <Table.Td>
         {u.first_name} {u.last_name}
       </Table.Td>
       <Table.Td>{u.email}</Table.Td>
       <Table.Td>
-        <Badge variant="light" color="indigo">
+        <Badge variant="light" color="teal">
           {u.role.replace("_", " ")}
         </Badge>
       </Table.Td>
@@ -146,7 +146,7 @@ export function UserManagement() {
       </Table.Td>
       <Table.Td>
         <Group gap="xs" justify="flex-end">
-          <ActionIcon variant="subtle" color="indigo" onClick={() => openEdit(u)}>
+          <ActionIcon variant="subtle" color="teal" onClick={() => openEdit(u)}>
             <IconEdit size={18} />
           </ActionIcon>
           <ActionIcon
@@ -170,36 +170,50 @@ export function UserManagement() {
   ));
 
   return (
-    <Stack gap="md">
-      <Group justify="space-between">
-        <Text size="sm" c="dimmed">
-          Manage admin and artist accounts.
-        </Text>
-        <Button color="indigo" onClick={() => setCreateOpen(true)}>
+    <Stack gap="lg">
+      <div className="flex flex-col gap-4 rounded-xl border border-zinc-200/80 bg-gradient-to-br from-zinc-50/95 to-white/90 p-4 shadow-sm sm:rounded-2xl sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div className="min-w-0">
+          <Text fw={800} size="md" className="text-zinc-900">
+            User directory
+          </Text>
+          <Text size="sm" className="mt-1 max-w-prose text-zinc-600">
+            Manage admin and artist accounts. Edits are validated client‑side; sensitive fields stay
+            server‑protected.
+          </Text>
+        </div>
+        <Button color="teal" radius="md" size="md" onClick={() => setCreateOpen(true)} className="min-h-11 shrink-0 font-semibold shadow-md shadow-teal-600/15 sm:min-h-0">
           Add user
         </Button>
-      </Group>
+      </div>
 
       {isError && (
-        <Text c="red" size="sm">
+        <div className="rounded-xl border border-red-200 bg-red-50/90 px-4 py-3 text-sm text-red-800">
           {getErrorMessage(error)}
-        </Text>
+        </div>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
-        <Table striped highlightOnHover verticalSpacing="sm">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>ID</Table.Th>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Email</Table.Th>
-              <Table.Th>Role</Table.Th>
-              <Table.Th>Status</Table.Th>
-              <Table.Th style={{ width: 120 }} />
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{isLoading ? null : rows}</Table.Tbody>
-        </Table>
+      <div className="-mx-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm sm:mx-0 sm:rounded-2xl">
+        <div className="overflow-x-auto overscroll-x-contain touch-pan-x">
+          <Table
+            striped
+            highlightOnHover
+            verticalSpacing="md"
+            horizontalSpacing="md"
+            classNames={{ thead: "bg-zinc-50/95 [&_th]:font-semibold [&_th]:text-zinc-600 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wider" }}
+          >
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th className="hidden sm:table-cell">ID</Table.Th>
+                <Table.Th>Name</Table.Th>
+                <Table.Th>Email</Table.Th>
+                <Table.Th>Role</Table.Th>
+                <Table.Th>Status</Table.Th>
+                <Table.Th style={{ width: 120 }} />
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{isLoading ? null : rows}</Table.Tbody>
+          </Table>
+        </div>
       </div>
 
       {data && data.pagination.totalPages > 1 && (
@@ -208,7 +222,7 @@ export function UserManagement() {
             total={data.pagination.totalPages}
             value={page}
             onChange={setPage}
-            color="indigo"
+            color="teal"
           />
         </Group>
       )}
@@ -243,7 +257,7 @@ export function UserManagement() {
             <TextInput label="Address" required {...createForm.getInputProps("address")} />
             <Select label="Role" data={roleOptions} {...createForm.getInputProps("role")} />
             <Switch label="Active" {...createForm.getInputProps("is_active", { type: "checkbox" })} />
-            <Button type="submit" loading={createMutation.isPending} color="indigo">
+            <Button type="submit" loading={createMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
               Create
             </Button>
           </Stack>
@@ -296,7 +310,7 @@ export function UserManagement() {
             <TextInput label="Address" required {...editForm.getInputProps("address")} />
             <Select label="Role" data={roleOptions} {...editForm.getInputProps("role")} />
             <Switch label="Active" {...editForm.getInputProps("is_active", { type: "checkbox" })} />
-            <Button type="submit" loading={updateMutation.isPending} color="indigo">
+            <Button type="submit" loading={updateMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
               Save changes
             </Button>
           </Stack>
