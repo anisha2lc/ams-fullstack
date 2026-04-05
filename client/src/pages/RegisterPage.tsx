@@ -1,9 +1,7 @@
 import { zodResolver } from "mantine-form-zod-resolver";
 import {
   Anchor,
-  Button,
   Grid,
-  Paper,
   PasswordInput,
   Select,
   Stack,
@@ -24,11 +22,7 @@ const genderOptions = [
   { value: "o", label: "Other" },
 ];
 
-const roleOptions = [
-  { value: "artist_manager", label: "Artist manager" },
-  { value: "super_admin", label: "Super admin" },
-  { value: "artist", label: "Artist" },
-];
+const roleOptions = [{ value: "artist", label: "Artist" }];
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -78,118 +72,146 @@ export function RegisterPage() {
   });
 
   return (
-    <div className="relative flex min-h-[100dvh] items-center justify-center overflow-x-hidden overflow-y-auto px-4 py-8 sm:p-6 sm:py-12">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-12 h-72 w-72 rounded-full bg-teal-400/18 blur-3xl sm:h-80 sm:w-80" />
-        <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-cyan-400/12 blur-3xl sm:h-96 sm:w-96" />
-      </div>
+    <>
+      <div className="login-root">
+        <div className="glow-a" />
+        <div className="glow-b" />
 
-      <Paper
-        className="relative w-full max-w-2xl border border-zinc-200/80 bg-white/95 shadow-xl shadow-zinc-900/10 backdrop-blur-xl"
-        radius="xl"
-        p="xl"
-        withBorder
-      >
-        <Stack gap="lg">
-          <div className="flex items-start gap-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-600 text-base font-black text-white shadow-lg shadow-teal-600/25 sm:h-12 sm:w-12 sm:text-lg">
-              +
+        {/* Wider card for register */}
+        <div className="login-card" style={{ maxWidth: 560, padding: "2.5rem 2.25rem" }}>
+          {/* Decorative accents */}
+          <div className="card-accent" />
+          <div className="corner-tl" />
+          <div className="corner-br" />
+
+          <Stack gap="lg">
+            {/* Header */}
+            <div className="header-block">
+              <div className="monogram-wrap">
+                <div className="monogram-ring" />
+                <div className="monogram-pulse" />
+                <div className="monogram-core">A</div>
+              </div>
+              <div style={{ paddingTop: 2 }}>
+                <Title order={2} className="headline">
+                  Create account
+                </Title>
+                <Text className="subline">
+                  Register a new admin or artist manager
+                </Text>
+              </div>
             </div>
-            <div>
-              <Title order={2} className="text-zinc-900 tracking-tight">
-                Register admin
-              </Title>
-              <Text size="sm" className="mt-1 text-zinc-600 leading-relaxed">
-                Create your account, then sign in on the next screen.
-              </Text>
-            </div>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <Stack gap="sm">
-              <Grid gutter="sm">
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <TextInput
-                    label="First name"
-                    required
-                    key={form.key("first_name")}
-                    {...form.getInputProps("first_name")}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <TextInput
-                    label="Last name"
-                    required
-                    key={form.key("last_name")}
-                    {...form.getInputProps("last_name")}
-                  />
-                </Grid.Col>
-              </Grid>
-              <TextInput
-                label="Email"
-                type="email"
-                required
-                key={form.key("email")}
-                {...form.getInputProps("email")}
-              />
-              <PasswordInput
-                label="Password"
-                required
-                key={form.key("password")}
-                {...form.getInputProps("password")}
-              />
-              <TextInput
-                label="Phone"
-                required
-                key={form.key("phone")}
-                {...form.getInputProps("phone")}
-              />
-              <Grid gutter="sm">
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <TextInput
-                    label="Date of birth"
-                    type="date"
-                    required
-                    max={new Date().toISOString().slice(0, 10)}
-                    key={form.key("dob")}
-                    {...form.getInputProps("dob")}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Select
-                    label="Gender"
-                    data={genderOptions}
-                    required
-                    key={form.key("gender")}
-                    {...form.getInputProps("gender")}
-                  />
-                </Grid.Col>
-              </Grid>
-              <TextInput
-                label="Address"
-                required
-                key={form.key("address")}
-                {...form.getInputProps("address")}
-              />
-              <Select
-                label="Role"
-                description="Defaults to artist manager if omitted on API"
-                data={roleOptions}
-                key={form.key("role")}
-                {...form.getInputProps("role")}
-              />
-              <Button type="submit" fullWidth mt="md" size="md" radius="md" color="teal" className="min-h-11 font-semibold shadow-md shadow-teal-600/20">
-                Register
-              </Button>
-            </Stack>
-          </form>
-          <Text size="sm" ta="center" className="text-zinc-500">
-            Already have an account?{" "}
-            <Anchor component={Link} to="/login" size="sm" fw={600} className="text-teal-700">
-              Sign in
-            </Anchor>
-          </Text>
-        </Stack>
-      </Paper>
-    </div>
+
+            {/* Section label */}
+            <div className="section-label">account details</div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="login-form">
+              <Stack gap="sm">
+                <Grid gutter="sm">
+                  <Grid.Col span={{ base: 12, sm: 6 }}>
+                    <TextInput
+                      label="First name"
+                      placeholder="Jane"
+                      required
+                      key={form.key("first_name")}
+                      {...form.getInputProps("first_name")}
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={{ base: 12, sm: 6 }}>
+                    <TextInput
+                      label="Last name"
+                      placeholder="Doe"
+                      required
+                      key={form.key("last_name")}
+                      {...form.getInputProps("last_name")}
+                    />
+                  </Grid.Col>
+                </Grid>
+
+                <TextInput
+                  label="Email"
+                  placeholder="you@example.com"
+                  type="email"
+                  required
+                  key={form.key("email")}
+                  {...form.getInputProps("email")}
+                />
+
+                <PasswordInput
+                  label="Password"
+                  placeholder="••••••••"
+                  required
+                  key={form.key("password")}
+                  {...form.getInputProps("password")}
+                />
+
+                <TextInput
+                  label="Phone"
+                  placeholder="+1 555 000 0000"
+                  required
+                  key={form.key("phone")}
+                  {...form.getInputProps("phone")}
+                />
+
+                <Grid gutter="sm">
+                  <Grid.Col span={{ base: 12, sm: 6 }}>
+                    <TextInput
+                      label="Date of birth"
+                      type="date"
+                      required
+                      max={new Date().toISOString().slice(0, 10)}
+                      key={form.key("dob")}
+                      {...form.getInputProps("dob")}
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={{ base: 12, sm: 6 }}>
+                    <Select
+                      label="Gender"
+                      data={genderOptions}
+                      required
+                      key={form.key("gender")}
+                      {...form.getInputProps("gender")}
+                    />
+                  </Grid.Col>
+                </Grid>
+
+                <TextInput
+                  label="Address"
+                  placeholder="123 Main St, City"
+                  required
+                  key={form.key("address")}
+                  {...form.getInputProps("address")}
+                />
+
+                <Select
+                  label="Role"
+                  description="Defaults to artist manager if omitted"
+                  data={roleOptions}
+                  key={form.key("role")}
+                  {...form.getInputProps("role")}
+                />
+
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  style={{ width: "100%", marginTop: "1rem", cursor: "pointer" }}
+                >
+                  Create Account
+                </button>
+              </Stack>
+            </form>
+
+            {/* Footer */}
+            <Text ta="center" className="login-footer">
+              Already have an account?{" "}
+              <Anchor component={Link} to="/login">
+                Sign in
+              </Anchor>
+            </Text>
+          </Stack>
+        </div>
+      </div>
+    </>
   );
 }

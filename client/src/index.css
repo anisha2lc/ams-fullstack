@@ -46,3 +46,554 @@ body {
   scrollbar-width: thin;
   scrollbar-color: rgb(203 213 225) transparent;
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes rotateLine {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+@keyframes gridFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.login-root {
+  font-family: 'DM Mono', monospace;
+  min-height: 100dvh;
+  background: #0c0c0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1rem;
+}
+
+/* Fine dot grid */
+.login-root::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #ffffff0d 1px, transparent 1px);
+  background-size: 32px 32px;
+  animation: gridFade 1.2s ease both;
+  pointer-events: none;
+}
+
+/* Ambient glows */
+.glow-a {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #c9a84c22 0%, transparent 70%);
+  top: -120px;
+  left: -160px;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.glow-b {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #6b4c1e18 0%, transparent 70%);
+  bottom: -80px;
+  right: -100px;
+  pointer-events: none;
+  filter: blur(60px);
+}
+
+/* Rotating decorative ring behind monogram */
+.monogram-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.monogram-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed #c9a84c55;
+  animation: rotateLine 18s linear infinite;
+}
+
+.monogram-ring::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c9a84c;
+}
+
+.monogram-core {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #b8902a, #e8c96a, #9a7220);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0c0c0e;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8px 32px #c9a84c30, inset 0 1px 0 #fff3;
+}
+
+.monogram-pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  border: 1px solid #c9a84c40;
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+
+/* Card */
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #141416;
+  border: 1px solid #ffffff12;
+  border-radius: 24px;
+  padding: 2.5rem 2.25rem;
+  box-shadow:
+    0 0 0 1px #c9a84c08,
+    0 32px 64px #00000080,
+    inset 0 1px 0 #ffffff0a;
+  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Gold top accent line */
+.card-accent {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+  border-radius: 999px;
+}
+
+.header-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  animation: fadeUp 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.headline {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.85rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.1 !important;
+  color: #f5f0e8 !important;
+  margin: 0 !important;
+}
+
+.subline {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.04em;
+  color: #6b6860 !important;
+  margin-top: 5px !important;
+  line-height: 1.6 !important;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ffffff10, transparent);
+  margin: 0.25rem 0;
+  animation: fadeUp 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Form field overrides */
+.login-form {
+  animation: fadeUp 0.7s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.login-form .mantine-TextInput-root,
+.login-form .mantine-PasswordInput-root {
+  /* label */
+}
+
+.login-form .mantine-InputWrapper-label {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #7a7670 !important;
+  margin-bottom: 6px !important;
+  font-weight: 400 !important;
+}
+
+.login-form .mantine-Input-input {
+  background: #0f0f11 !important;
+  border: 1px solid #ffffff14 !important;
+  border-radius: 10px !important;
+  color: #ede8de !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.82rem !important;
+  height: 46px !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+  box-shadow: inset 0 1px 2px #0006 !important;
+}
+
+.login-form .mantine-Input-input::placeholder {
+  color: #3a3835 !important;
+}
+
+.login-form .mantine-Input-input:focus {
+  border-color: #c9a84c55 !important;
+  box-shadow: 0 0 0 3px #c9a84c12, inset 0 1px 2px #0006 !important;
+  outline: none !important;
+}
+
+.login-form .mantine-PasswordInput-innerInput {
+  background: transparent !important;
+  border: none !important;
+  color: #ede8de !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.82rem !important;
+  box-shadow: none !important;
+}
+
+.login-form .mantine-PasswordInput-input {
+  background: #0f0f11 !important;
+  border: 1px solid #ffffff14 !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 1px 2px #0006 !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.login-form .mantine-PasswordInput-input:focus-within {
+  border-color: #c9a84c55 !important;
+  box-shadow: 0 0 0 3px #c9a84c12, inset 0 1px 2px #0006 !important;
+}
+
+.login-form .mantine-Input-rightSection button {
+  color: #5a5650 !important;
+}
+
+.login-form .mantine-Input-rightSection button:hover {
+  color: #c9a84c !important;
+}
+
+.login-form .mantine-InputWrapper-error {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.65rem !important;
+  color: #e07070 !important;
+  margin-top: 5px !important;
+}
+
+/* Submit button */
+.submit-btn {
+  position: relative;
+  height: 48px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #b8902a, #d4a843, #9a7220) !important;
+  background-size: 200% auto !important;
+  color: #0c0c0e !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  transition: transform 0.15s, box-shadow 0.2s, background-position 0.4s !important;
+  box-shadow: 0 4px 20px #c9a84c28, inset 0 1px 0 #fff3 !important;
+  overflow: hidden !important;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, #ffffff22, transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.submit-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.submit-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 28px #c9a84c40, inset 0 1px 0 #fff3 !important;
+  background-position: right center !important;
+}
+
+.submit-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* Footer */
+.login-footer {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.68rem !important;
+  color: #44403c !important;
+  letter-spacing: 0.04em !important;
+  animation: fadeUp 0.7s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.login-footer a {
+  color: #c9a84c !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid #c9a84c40 !important;
+  padding-bottom: 1px !important;
+  transition: border-color 0.2s, color 0.2s !important;
+}
+
+.login-footer a:hover {
+  color: #e8c96a !important;
+  border-color: #e8c96a80 !important;
+}
+
+/* Corner brackets decorative */
+.corner-tl,
+.corner-br {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.corner-tl {
+  top: 14px;
+  left: 14px;
+  border-top: 1px solid #c9a84c30;
+  border-left: 1px solid #c9a84c30;
+  border-radius: 3px 0 0 0;
+}
+
+.corner-br {
+  bottom: 14px;
+  right: 14px;
+  border-bottom: 1px solid #c9a84c30;
+  border-right: 1px solid #c9a84c30;
+  border-radius: 0 0 3px 0;
+}
+
+/* Label row with line */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #3d3b38;
+  animation: fadeUp 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.section-label::before,
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ffffff0a;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&display=swap');
+
+.dash-root {
+  font-family: 'DM Mono', monospace;
+  background: #f8f5ef;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+  color: #1a1612;
+}
+
+.dash-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.dash-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
+  flex-wrap: wrap;
+}
+
+.dash-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #1a1612;
+  margin: 0;
+}
+
+.dash-title em {
+  font-style: italic;
+  color: #c9871c;
+}
+
+.dash-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: #7a7068;
+  margin-top: 0.5rem;
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.dash-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #1a1612;
+  color: #f0c060;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.dash-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c9871c;
+  animation: dash-live 2s ease-in-out infinite;
+}
+
+@keyframes dash-live {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* ── Tab bar ── */
+.dash-tabs {
+  display: inline-flex;
+  background: #fff;
+  border: 1px solid rgba(26, 22, 18, 0.09);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 2px;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(26, 22, 18, 0.05), 0 8px 32px rgba(26, 22, 18, 0.05);
+}
+
+.dash-tab {
+  padding: 8px 22px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7a7068;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.dash-tab:hover {
+  background: #f2ede4;
+  color: #1a1612;
+}
+
+.dash-tab.dash-tab--active {
+  background: #1a1612;
+  color: #f0c060;
+  box-shadow: 0 2px 8px rgba(26, 22, 18, 0.2);
+}
+
+/* ── Content panel ── */
+.dash-panel {
+  background: #fff;
+  border: 1px solid rgba(26, 22, 18, 0.09);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(26, 22, 18, 0.05), 0 8px 32px rgba(26, 22, 18, 0.06);
+  overflow: hidden;
+}

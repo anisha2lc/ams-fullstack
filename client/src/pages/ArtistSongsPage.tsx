@@ -136,12 +136,15 @@ export function ArtistSongsPage() {
       <Table.Td>
         {canEdit ? (
           <Group gap="xs" justify="flex-end">
-            <ActionIcon variant="subtle" color="teal" onClick={() => openEdit(s)}>
+            <ActionIcon variant="light" color="indigo" size="lg" radius="xl" onClick={() => openEdit(s)} className="shadow-sm hover:scale-105 transition-transform">
               <IconEdit size={18} />
             </ActionIcon>
             <ActionIcon
-              variant="subtle"
+              variant="light"
               color="red"
+              size="lg"
+              radius="xl"
+              className="shadow-sm hover:scale-105 transition-transform"
               onClick={() =>
                 modals.openConfirmModal({
                   title: "Delete song",
@@ -166,33 +169,35 @@ export function ArtistSongsPage() {
 
   return (
     <div className="mx-auto w-full max-w-[1400px]">
-      <div className="rounded-xl border border-zinc-200/80 bg-white/90 p-4 shadow-lg shadow-zinc-900/5 backdrop-blur-xl sm:rounded-2xl sm:p-6 lg:p-7">
-        <Stack gap="lg">
+      <div className="rounded-3xl border border-white/50 bg-white/40 p-5 shadow-[0_8px_40px_rgb(0,0,0,0.04)] backdrop-blur-2xl sm:p-8 lg:p-10">
+        <Stack gap="xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <Anchor
                 component={Link}
                 to="/dashboard?tab=artists"
-                className="mb-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-teal-700 hover:text-teal-800 sm:min-h-0"
+                className="mb-3 inline-flex min-h-12 items-center gap-2 rounded-2xl bg-white/50 px-4 py-2 text-sm font-bold text-indigo-700 shadow-sm backdrop-blur-md hover:bg-white/70 hover:text-indigo-800 transition-all sm:min-h-0"
               >
                 <IconArrowLeft size={16} />
                 Back to artists
               </Anchor>
-              <Title order={2} className="text-zinc-900 tracking-tight">
-                Songs
+              <Title order={2} className="text-2xl font-black text-slate-800 tracking-tight sm:text-3xl mt-4">
+                Songs Catalog
                 {artist ? (
-                  <Text span inherit fw={500} className="text-zinc-500" size="lg" ml="xs">
+                  <Text span inherit fw={500} className="text-slate-400" size="xl" ml="md">
                     — {artist.name}
                   </Text>
                 ) : null}
               </Title>
-              <Text size="sm" className="mt-2 max-w-prose text-zinc-600">
+              <Text size="sm" className="mt-2 font-medium max-w-prose text-slate-500">
                 Create and organize tracks for this artist. Genres are validated against the API enum.
               </Text>
             </div>
             {canEdit && (
-              <Button color="teal" radius="md" size="md" onClick={() => setCreateOpen(true)} className="min-h-11 shrink-0 font-semibold shadow-md shadow-teal-600/15 sm:min-h-0">
-                Add song
+              <Button 
+                variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }}
+                radius="xl" size="md" onClick={() => setCreateOpen(true)} className="min-h-12 shrink-0 font-bold shadow-lg shadow-indigo-500/20 hover:-translate-y-0.5 hover:shadow-indigo-500/30 transition-all sm:min-h-0">
+                Add New Song
               </Button>
             )}
           </div>
@@ -208,16 +213,16 @@ export function ArtistSongsPage() {
             </div>
           )}
 
-          <div className="-mx-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm sm:mx-0 sm:rounded-2xl">
+          <div className="-mx-1 overflow-hidden rounded-3xl border border-white/60 bg-white/60 shadow-sm backdrop-blur-md sm:mx-0">
             <div className="overflow-x-auto overscroll-x-contain touch-pan-x">
               <Table
                 striped
-                highlightOnHover
-                verticalSpacing="md"
-                horizontalSpacing="md"
+                verticalSpacing="lg"
+                horizontalSpacing="lg"
                 classNames={{
                   thead:
-                    "bg-zinc-50/95 [&_th]:font-semibold [&_th]:text-zinc-600 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wider",
+                    "bg-white/40 [&_th]:font-bold [&_th]:text-slate-500 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-widest border-b border-white/60",
+                  tbody: "[&_td]:text-slate-700 [&_td]:font-medium",
                 }}
               >
                 <Table.Thead>
@@ -235,41 +240,43 @@ export function ArtistSongsPage() {
           </div>
 
       {songsQuery.data && songsQuery.data.pagination.totalPages > 1 && (
-        <Group justify="center">
+        <Group justify="center" mt="xl">
           <Pagination
             total={songsQuery.data.pagination.totalPages}
             value={page}
             onChange={setPage}
-            color="teal"
+            color="indigo"
+            radius="xl"
+            classNames={{ control: 'border-white/60 bg-white/50 backdrop-blur-md shadow-sm' }}
           />
         </Group>
       )}
 
-      <Modal opened={createOpen} onClose={() => setCreateOpen(false)} title="New song" size="md">
+      <Modal opened={createOpen} onClose={() => setCreateOpen(false)} title={<Text fw={800} size="lg">New song</Text>} size="md" radius="xl" classNames={{ content: 'bg-white/90 backdrop-blur-xl', header: 'bg-transparent' }}>
         <form onSubmit={createForm.onSubmit((v) => createMutation.mutate(v))}>
-          <Stack gap="sm">
-            <TextInput label="Title" required {...createForm.getInputProps("title")} />
-            <TextInput label="Album" required {...createForm.getInputProps("album_name")} />
-            <Select label="Genre" data={genreOptions} {...createForm.getInputProps("genre")} />
-            <Button type="submit" loading={createMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
+          <Stack gap="md">
+            <TextInput label="Title" required {...createForm.getInputProps("title")} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} />
+            <TextInput label="Album" required {...createForm.getInputProps("album_name")} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} />
+            <Select label="Genre" data={genreOptions} {...createForm.getInputProps("genre")} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} />
+            <Button type="submit" loading={createMutation.isPending} variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} mt="sm" radius="xl" size="md">
               Create
             </Button>
           </Stack>
         </form>
       </Modal>
 
-      <Modal opened={!!editSong} onClose={() => setEditSong(null)} title="Edit song" size="md">
+      <Modal opened={!!editSong} onClose={() => setEditSong(null)} title={<Text fw={800} size="lg">Edit song</Text>} size="md" radius="xl" classNames={{ content: 'bg-white/90 backdrop-blur-xl', header: 'bg-transparent' }}>
         <form
           onSubmit={editForm.onSubmit((v) => {
             if (!editSong) return;
             updateMutation.mutate({ songId: editSong.id, body: v });
           })}
         >
-          <Stack gap="sm">
-            <TextInput label="Title" required {...editForm.getInputProps("title")} />
-            <TextInput label="Album" required {...editForm.getInputProps("album_name")} />
-            <Select label="Genre" data={genreOptions} {...editForm.getInputProps("genre")} />
-            <Button type="submit" loading={updateMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
+          <Stack gap="md">
+            <TextInput label="Title" required {...editForm.getInputProps("title")} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} />
+            <TextInput label="Album" required {...editForm.getInputProps("album_name")} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} />
+            <Select label="Genre" data={genreOptions} {...editForm.getInputProps("genre")} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} />
+            <Button type="submit" loading={updateMutation.isPending} variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} mt="sm" radius="xl" size="md">
               Save changes
             </Button>
           </Stack>

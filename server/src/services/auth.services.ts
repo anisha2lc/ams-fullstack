@@ -50,6 +50,22 @@ class AuthService {
       throw new Error("User registration failed");
     }
 
+    if (created.role === "artist") {
+      await query(
+        `INSERT INTO artists (user_id, name, dob, gender, address, first_release_year, no_of_albums_released)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [
+          created.id,
+          `${created.first_name} ${created.last_name}`,
+          created.dob,
+          created.gender,
+          created.address,
+          new Date().getFullYear(), // sensible default
+          0,
+        ],
+      );
+    }
+
     const { password, ...safeUser } = created;
     return safeUser;
   }

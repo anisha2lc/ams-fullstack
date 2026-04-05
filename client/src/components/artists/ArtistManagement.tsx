@@ -155,9 +155,11 @@ export function ArtistManagement() {
         <Button
           component={Link}
           to={`/dashboard/artists/${a.id}/songs`}
-          size="xs"
+          size="sm"
           variant="light"
-          color="teal"
+          color="indigo"
+          radius="lg"
+          className="font-bold hover:-translate-y-0.5 transition-transform"
           leftSection={<IconMusic size={14} />}
         >
           Songs
@@ -166,12 +168,15 @@ export function ArtistManagement() {
       <Table.Td>
         {canEdit ? (
           <Group gap="xs" justify="flex-end">
-            <ActionIcon variant="subtle" color="teal" onClick={() => openEdit(a)}>
+            <ActionIcon variant="light" color="indigo" size="lg" radius="xl" onClick={() => openEdit(a)} className="shadow-sm hover:scale-105 transition-transform">
               <IconEdit size={18} />
             </ActionIcon>
             <ActionIcon
-              variant="subtle"
+              variant="light"
               color="red"
+              size="lg"
+              radius="xl"
+              className="shadow-sm hover:scale-105 transition-transform"
               onClick={() =>
                 modals.openConfirmModal({
                   title: "Delete artist",
@@ -195,38 +200,35 @@ export function ArtistManagement() {
   ));
 
   return (
-    <Stack gap="lg">
-      <div className="flex flex-col gap-4 rounded-xl border border-zinc-200/80 bg-gradient-to-br from-teal-50/40 via-white/90 to-emerald-50/25 p-4 shadow-sm sm:rounded-2xl sm:flex-row sm:items-start sm:justify-between sm:p-5">
+    <Stack gap="xl">
+      <div className="flex flex-col gap-4 rounded-3xl border border-white/60 bg-white/50 p-6 shadow-[0_8px_40px_rgb(0,0,0,0.04)] backdrop-blur-md sm:flex-row sm:items-start sm:justify-between sm:p-8">
         <div className="max-w-xl min-w-0">
-          <Text fw={800} size="md" className="text-zinc-900">
-            Artist catalog
-          </Text>
-          <Text size="sm" className="mt-1 text-zinc-600 leading-relaxed">
-            Artists and metadata. Super admins can view; artist managers can create, import, and
-            export CSV.
+          <Text fw={900} size="xl" className="text-slate-800 tracking-tight">
+            Artist Catalog
           </Text>
         </div>
-        <Group gap="sm" wrap="wrap" className="w-full shrink-0 sm:w-auto [&_button]:min-h-11 sm:[&_button]:min-h-0">
+        <Group gap="sm" wrap="wrap" className="w-full shrink-0 sm:w-auto [&_button]:min-h-12 sm:[&_button]:min-h-0">
           {canEdit && (
             <>
               <FileButton onChange={(file) => file && importMutation.mutate(file)} accept=".csv">
                 {(props) => (
-                  <Button {...props} variant="default" radius="md" loading={importMutation.isPending} className="font-semibold">
+                  <Button {...props} variant="white" radius="xl" size="md" loading={importMutation.isPending} className="font-bold text-indigo-700 shadow-sm border border-indigo-100 hover:bg-slate-50 transition-all">
                     Import CSV
                   </Button>
                 )}
               </FileButton>
               <Button
-                variant="default"
-                radius="md"
+                variant="white"
+                radius="xl"
+                size="md"
+                className="font-bold text-indigo-700 shadow-sm border border-indigo-100 hover:bg-slate-50 transition-all"
                 loading={exportMutation.isPending}
                 onClick={() => exportMutation.mutate()}
-                className="font-semibold"
               >
                 Export CSV
               </Button>
-              <Button color="teal" radius="md" size="md" onClick={() => setCreateOpen(true)} className="font-semibold shadow-md shadow-teal-600/15">
-                Add artist
+              <Button variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} radius="xl" size="md" onClick={() => setCreateOpen(true)} className="font-bold shadow-lg shadow-indigo-500/20 hover:-translate-y-0.5 hover:shadow-indigo-500/30 transition-all">
+                Add Artist
               </Button>
             </>
           )}
@@ -239,14 +241,13 @@ export function ArtistManagement() {
         </div>
       )}
 
-      <div className="-mx-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm sm:mx-0 sm:rounded-2xl">
+      <div className="-mx-1 overflow-hidden rounded-3xl border border-white/60 bg-white/60 shadow-sm backdrop-blur-md sm:mx-0">
         <div className="overflow-x-auto overscroll-x-contain touch-pan-x">
           <Table
             striped
-            highlightOnHover
-            verticalSpacing="md"
-            horizontalSpacing="md"
-            classNames={{ thead: "bg-zinc-50/95 [&_th]:font-semibold [&_th]:text-zinc-600 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wider" }}
+            verticalSpacing="lg"
+            horizontalSpacing="lg"
+            classNames={{ thead: "bg-white/40 [&_th]:font-bold [&_th]:text-slate-500 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-widest border-b border-white/60", tbody: "[&_td]:text-slate-700 [&_td]:font-medium" }}
           >
             <Table.Thead>
               <Table.Tr>
@@ -264,57 +265,63 @@ export function ArtistManagement() {
       </div>
 
       {data && data.pagination.totalPages > 1 && (
-        <Group justify="center">
+        <Group justify="center" mt="xl">
           <Pagination
             total={data.pagination.totalPages}
             value={page}
             onChange={setPage}
-            color="teal"
+            color="indigo"
+            radius="xl"
+            classNames={{ control: 'border-white/60 bg-white/50 backdrop-blur-md shadow-sm' }}
           />
         </Group>
       )}
 
-      <Modal opened={createOpen} onClose={() => setCreateOpen(false)} title="New artist" size="lg">
+      <Modal opened={createOpen} onClose={() => setCreateOpen(false)} title={<Text fw={900} size="lg" className="text-slate-800">New artist</Text>} size="lg" radius="xl" classNames={{ content: 'bg-white/90 backdrop-blur-xl border border-white/60 shadow-2xl shadow-indigo-900/10', header: 'bg-transparent' }}>
         <form
           onSubmit={createForm.onSubmit((values) => {
             createMutation.mutate(toArtistApiPayload(values));
           })}
         >
-          <Stack gap="sm">
+          <Stack gap="md">
             <TextInput
               label="Linked user ID (optional)"
               description="Numeric user id if this artist maps to a user account"
+              variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
               {...createForm.getInputProps("user_id")}
             />
-            <TextInput label="Name" required {...createForm.getInputProps("name")} />
+            <TextInput label="Name" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("name")} />
             <Group grow>
               <TextInput
                 label="Date of birth"
                 type="date"
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 max={new Date().toISOString().slice(0, 10)}
                 {...createForm.getInputProps("dob")}
               />
-              <Select label="Gender" data={genderOptions} {...createForm.getInputProps("gender")} />
+              <Select label="Gender" data={genderOptions} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("gender")} />
             </Group>
-            <TextInput label="Address" required {...createForm.getInputProps("address")} />
+            <TextInput label="Address" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("address")} />
             <Group grow>
               <NumberInput
                 label="First release year"
                 min={1900}
                 max={2100}
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 {...createForm.getInputProps("first_release_year")}
               />
               <NumberInput
                 label="Albums released"
                 min={0}
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 {...createForm.getInputProps("no_of_albums_released")}
               />
             </Group>
-            <Button type="submit" loading={createMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
-              Create
+            <Button type="submit" loading={createMutation.isPending} variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} mt="md" radius="xl" size="md">
+              Create User
             </Button>
           </Stack>
         </form>
@@ -323,8 +330,9 @@ export function ArtistManagement() {
       <Modal
         opened={!!editArtist}
         onClose={() => setEditArtist(null)}
-        title="Edit artist"
+        title={<Text fw={900} size="lg" className="text-slate-800">Edit artist</Text>}
         size="lg"
+        radius="xl" classNames={{ content: 'bg-white/90 backdrop-blur-xl border border-white/60 shadow-2xl shadow-indigo-900/10', header: 'bg-transparent' }}
       >
         <form
           onSubmit={editForm.onSubmit((values) => {
@@ -335,36 +343,39 @@ export function ArtistManagement() {
             });
           })}
         >
-          <Stack gap="sm">
-            <TextInput label="Linked user ID (optional)" {...editForm.getInputProps("user_id")} />
-            <TextInput label="Name" required {...editForm.getInputProps("name")} />
+          <Stack gap="md">
+            <TextInput label="Linked user ID (optional)" variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("user_id")} />
+            <TextInput label="Name" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("name")} />
             <Group grow>
               <TextInput
                 label="Date of birth"
                 type="date"
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 max={new Date().toISOString().slice(0, 10)}
                 {...editForm.getInputProps("dob")}
               />
-              <Select label="Gender" data={genderOptions} {...editForm.getInputProps("gender")} />
+              <Select label="Gender" data={genderOptions} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("gender")} />
             </Group>
-            <TextInput label="Address" required {...editForm.getInputProps("address")} />
+            <TextInput label="Address" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("address")} />
             <Group grow>
               <NumberInput
                 label="First release year"
                 min={1900}
                 max={2100}
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 {...editForm.getInputProps("first_release_year")}
               />
               <NumberInput
                 label="Albums released"
                 min={0}
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 {...editForm.getInputProps("no_of_albums_released")}
               />
             </Group>
-            <Button type="submit" loading={updateMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
+            <Button type="submit" loading={updateMutation.isPending} variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} mt="md" radius="xl" size="md">
               Save changes
             </Button>
           </Stack>
