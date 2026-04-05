@@ -146,12 +146,15 @@ export function UserManagement() {
       </Table.Td>
       <Table.Td>
         <Group gap="xs" justify="flex-end">
-          <ActionIcon variant="subtle" color="teal" onClick={() => openEdit(u)}>
+          <ActionIcon variant="light" color="indigo" size="lg" radius="xl" onClick={() => openEdit(u)} className="shadow-sm hover:scale-105 transition-transform">
             <IconEdit size={18} />
           </ActionIcon>
           <ActionIcon
-            variant="subtle"
+            variant="light"
             color="red"
+            size="lg"
+            radius="xl"
+            className="shadow-sm hover:scale-105 transition-transform"
             onClick={() =>
               modals.openConfirmModal({
                 title: "Delete user",
@@ -170,19 +173,15 @@ export function UserManagement() {
   ));
 
   return (
-    <Stack gap="lg">
-      <div className="flex flex-col gap-4 rounded-xl border border-zinc-200/80 bg-gradient-to-br from-zinc-50/95 to-white/90 p-4 shadow-sm sm:rounded-2xl sm:flex-row sm:items-center sm:justify-between sm:p-5">
+    <Stack gap="xl">
+      <div className="flex flex-col gap-4 rounded-3xl border border-white/60 bg-white/50 p-6 shadow-[0_8px_40px_rgb(0,0,0,0.04)] backdrop-blur-md sm:flex-row sm:items-center sm:justify-between sm:p-8">
         <div className="min-w-0">
-          <Text fw={800} size="md" className="text-zinc-900">
-            User directory
-          </Text>
-          <Text size="sm" className="mt-1 max-w-prose text-zinc-600">
-            Manage admin and artist accounts. Edits are validated client‑side; sensitive fields stay
-            server‑protected.
+          <Text fw={900} size="xl" className="text-slate-800 tracking-tight">
+            User Directory
           </Text>
         </div>
-        <Button color="teal" radius="md" size="md" onClick={() => setCreateOpen(true)} className="min-h-11 shrink-0 font-semibold shadow-md shadow-teal-600/15 sm:min-h-0">
-          Add user
+        <Button variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} radius="xl" size="md" onClick={() => setCreateOpen(true)} className="min-h-12 shrink-0 font-bold shadow-lg shadow-indigo-500/20 hover:-translate-y-0.5 hover:shadow-indigo-500/30 transition-all sm:min-h-0">
+          Add System User
         </Button>
       </div>
 
@@ -192,14 +191,13 @@ export function UserManagement() {
         </div>
       )}
 
-      <div className="-mx-1 overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm sm:mx-0 sm:rounded-2xl">
+      <div className="-mx-1 overflow-hidden rounded-3xl border border-white/60 bg-white/60 shadow-sm backdrop-blur-md sm:mx-0">
         <div className="overflow-x-auto overscroll-x-contain touch-pan-x">
           <Table
             striped
-            highlightOnHover
-            verticalSpacing="md"
-            horizontalSpacing="md"
-            classNames={{ thead: "bg-zinc-50/95 [&_th]:font-semibold [&_th]:text-zinc-600 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-wider" }}
+            verticalSpacing="lg"
+            horizontalSpacing="lg"
+            classNames={{ thead: "bg-white/40 [&_th]:font-bold [&_th]:text-slate-500 [&_th]:text-xs [&_th]:uppercase [&_th]:tracking-widest border-b border-white/60", tbody: "[&_td]:text-slate-700 [&_td]:font-medium" }}
           >
             <Table.Thead>
               <Table.Tr>
@@ -217,17 +215,19 @@ export function UserManagement() {
       </div>
 
       {data && data.pagination.totalPages > 1 && (
-        <Group justify="center">
+        <Group justify="center" mt="xl">
           <Pagination
             total={data.pagination.totalPages}
             value={page}
             onChange={setPage}
-            color="teal"
+            color="indigo"
+            radius="xl"
+            classNames={{ control: 'border-white/60 bg-white/50 backdrop-blur-md shadow-sm' }}
           />
         </Group>
       )}
 
-      <Modal opened={createOpen} onClose={() => setCreateOpen(false)} title="New user" size="lg">
+      <Modal opened={createOpen} onClose={() => setCreateOpen(false)} title={<Text fw={900} size="lg" className="text-slate-800">New user</Text>} size="lg" radius="xl" classNames={{ content: 'bg-white/90 backdrop-blur-xl border border-white/60 shadow-2xl shadow-indigo-900/10', header: 'bg-transparent' }}>
         <form
           onSubmit={createForm.onSubmit((values) =>
             createMutation.mutate({
@@ -236,29 +236,30 @@ export function UserManagement() {
             }),
           )}
         >
-          <Stack gap="sm">
+          <Stack gap="md">
             <Group grow>
-              <TextInput label="First name" required {...createForm.getInputProps("first_name")} />
-              <TextInput label="Last name" required {...createForm.getInputProps("last_name")} />
+              <TextInput label="First name" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("first_name")} />
+              <TextInput label="Last name" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("last_name")} />
             </Group>
-            <TextInput label="Email" required {...createForm.getInputProps("email")} />
-            <TextInput label="Password" type="password" required {...createForm.getInputProps("password")} />
-            <TextInput label="Phone" required {...createForm.getInputProps("phone")} />
+            <TextInput label="Email" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("email")} />
+            <TextInput label="Password" type="password" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("password")} />
+            <TextInput label="Phone" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("phone")} />
             <Group grow>
               <TextInput
                 label="Date of birth"
                 type="date"
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 max={new Date().toISOString().slice(0, 10)}
                 {...createForm.getInputProps("dob")}
               />
-              <Select label="Gender" data={genderOptions} {...createForm.getInputProps("gender")} />
+              <Select label="Gender" data={genderOptions} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("gender")} />
             </Group>
-            <TextInput label="Address" required {...createForm.getInputProps("address")} />
-            <Select label="Role" data={roleOptions} {...createForm.getInputProps("role")} />
-            <Switch label="Active" {...createForm.getInputProps("is_active", { type: "checkbox" })} />
-            <Button type="submit" loading={createMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
-              Create
+            <TextInput label="Address" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("address")} />
+            <Select label="Role" data={roleOptions} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...createForm.getInputProps("role")} />
+            <Switch label="Active" color="indigo" {...createForm.getInputProps("is_active", { type: "checkbox" })} />
+            <Button type="submit" loading={createMutation.isPending} variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} mt="md" radius="xl" size="md">
+              Create User
             </Button>
           </Stack>
         </form>
@@ -267,8 +268,9 @@ export function UserManagement() {
       <Modal
         opened={!!editUser}
         onClose={() => setEditUser(null)}
-        title="Edit user"
+        title={<Text fw={900} size="lg" className="text-slate-800">Edit user</Text>}
         size="lg"
+        radius="xl" classNames={{ content: 'bg-white/90 backdrop-blur-xl border border-white/60 shadow-2xl shadow-indigo-900/10', header: 'bg-transparent' }}
       >
         <form
           onSubmit={editForm.onSubmit((values) => {
@@ -288,29 +290,30 @@ export function UserManagement() {
             });
           })}
         >
-          <Stack gap="sm">
-            <Text size="sm" c="dimmed">
+          <Stack gap="md">
+            <Text size="sm" className="font-medium text-slate-500">
               Email: {editUser?.email} (cannot be changed)
             </Text>
             <Group grow>
-              <TextInput label="First name" required {...editForm.getInputProps("first_name")} />
-              <TextInput label="Last name" required {...editForm.getInputProps("last_name")} />
+              <TextInput label="First name" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("first_name")} />
+              <TextInput label="Last name" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("last_name")} />
             </Group>
-            <TextInput label="Phone" required {...editForm.getInputProps("phone")} />
+            <TextInput label="Phone" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("phone")} />
             <Group grow>
               <TextInput
                 label="Date of birth"
                 type="date"
                 required
+                variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }}
                 max={new Date().toISOString().slice(0, 10)}
                 {...editForm.getInputProps("dob")}
               />
-              <Select label="Gender" data={genderOptions} {...editForm.getInputProps("gender")} />
+              <Select label="Gender" data={genderOptions} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("gender")} />
             </Group>
-            <TextInput label="Address" required {...editForm.getInputProps("address")} />
-            <Select label="Role" data={roleOptions} {...editForm.getInputProps("role")} />
-            <Switch label="Active" {...editForm.getInputProps("is_active", { type: "checkbox" })} />
-            <Button type="submit" loading={updateMutation.isPending} color="teal" className="min-h-11 sm:min-h-0">
+            <TextInput label="Address" required variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("address")} />
+            <Select label="Role" data={roleOptions} variant="filled" classNames={{ input: "bg-white/60 focus:bg-white" }} {...editForm.getInputProps("role")} />
+            <Switch label="Active" color="indigo" {...editForm.getInputProps("is_active", { type: "checkbox" })} />
+            <Button type="submit" loading={updateMutation.isPending} variant="gradient" gradient={{ from: 'indigo.5', to: 'cyan.5', deg: 135 }} mt="md" radius="xl" size="md">
               Save changes
             </Button>
           </Stack>

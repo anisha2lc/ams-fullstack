@@ -21,22 +21,39 @@ const queryClient = new QueryClient({
   },
 });
 
+// Theme matching the reference repo: blue/teal palette, clean professional look
 const theme = createTheme({
-  primaryColor: "teal",
-  defaultRadius: "md",
-  fontFamily: "DM Sans, system-ui, sans-serif",
-  headings: {
-    fontFamily: "DM Sans, system-ui, sans-serif",
-    fontWeight: "700",
+  colors: {
+    primary: [
+      "#e3f2fd",
+      "#bbdefb",
+      "#90caf9",
+      "#64b5f6",
+      "#42a5f5",
+      "#2196f3",
+      "#1e88e5",
+      "#1976d2",
+      "#1565c0",
+      "#0d47a1",
+    ],
   },
-  defaultGradient: { from: "teal.6", to: "emerald.6", deg: 125 },
+  primaryColor: "teal",
+  fontFamily: "'Inter', system-ui, sans-serif",
+  headings: {
+    fontFamily: "'Inter', system-ui, sans-serif",
+    fontWeight: "600",
+  },
+  defaultRadius: "md",
   components: {
-    Button: { defaultProps: { radius: "md", size: "sm" } },
-    TextInput: { defaultProps: { radius: "md", size: "sm" } },
-    PasswordInput: { defaultProps: { radius: "md", size: "sm" } },
-    Select: { defaultProps: { radius: "md", size: "sm" } },
-    Table: { defaultProps: { verticalSpacing: "sm", horizontalSpacing: "md" } },
-    Paper: { defaultProps: { radius: "lg", shadow: "sm" } },
+    Button: {
+      defaultProps: { radius: "md" },
+    },
+    TextInput: { defaultProps: { radius: "md" } },
+    PasswordInput: { defaultProps: { radius: "md" } },
+    NumberInput: { defaultProps: { radius: "md" } },
+    Select: { defaultProps: { radius: "md" } },
+    Card: { defaultProps: { radius: "md", shadow: "sm", withBorder: true } },
+    Paper: { defaultProps: { radius: "md", shadow: "sm" } },
   },
 });
 
@@ -45,7 +62,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme} defaultColorScheme="light">
         <ModalsProvider>
-          <Notifications position="top-center" zIndex={10000} />
+          <Notifications position="top-right" zIndex={10000} />
           <AuthProvider>
             <BrowserRouter>
               <Routes>
@@ -97,4 +114,3 @@ export default function App() {
     </QueryClientProvider>
   );
 }
-

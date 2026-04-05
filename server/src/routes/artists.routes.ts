@@ -53,21 +53,21 @@ router.get(
 
 router.post(
   "/",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   validateRequest(artistRegistrationSchema),
   artistController.registerArtist,
 );
 
 router.put(
   "/:id",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   validateRequest(artistUpdateSchema),
   artistController.updateArtist,
 );
 
 router.delete(
   "/:id",
-  verifyAuthorizationRole(ROLE.ARTIST_MANAGER),
+  verifyAuthorizationRole(ROLE.SUPER_ADMIN, ROLE.ARTIST_MANAGER),
   artistController.deleteArtist,
 );
 

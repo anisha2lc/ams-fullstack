@@ -1,10 +1,127 @@
 import { useMemo } from "react";
-import { Tabs } from "@mantine/core";
 import { useSearchParams } from "react-router-dom";
 import { UserManagement } from "@/components/users/UserManagement";
 import { ArtistManagement } from "@/components/artists/ArtistManagement";
 
 type DashboardTab = "users" | "artists";
+
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&display=swap');
+
+.dash-root {
+  font-family: 'DM Mono', monospace;
+  background: #f8f5ef;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+  color: #1a1612;
+}
+
+.dash-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.dash-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
+  flex-wrap: wrap;
+}
+.dash-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #1a1612;
+  margin: 0;
+}
+.dash-title em {
+  font-style: italic;
+  color: #c9871c;
+}
+.dash-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: #7a7068;
+  margin-top: 0.5rem;
+  max-width: 440px;
+  line-height: 1.7;
+}
+.dash-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #1a1612;
+  color: #f0c060;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.dash-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c9871c;
+  animation: dash-live 2s ease-in-out infinite;
+}
+@keyframes dash-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* ── Tab bar ── */
+.dash-tabs {
+  display: inline-flex;
+  background: #fff;
+  border: 1px solid rgba(26,22,18,0.09);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 2px;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(26,22,18,0.05), 0 8px 32px rgba(26,22,18,0.05);
+}
+.dash-tab {
+  padding: 8px 22px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7a7068;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.dash-tab:hover { background: #f2ede4; color: #1a1612; }
+.dash-tab.dash-tab--active {
+  background: #1a1612;
+  color: #f0c060;
+  box-shadow: 0 2px 8px rgba(26,22,18,0.2);
+}
+
+/* ── Content panel ── */
+.dash-panel {
+  background: #fff;
+  border: 1px solid rgba(26,22,18,0.09);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(26,22,18,0.05), 0 8px 32px rgba(26,22,18,0.06);
+  overflow: hidden;
+}
+`;
 
 export function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,53 +132,50 @@ export function DashboardPage() {
     return "users";
   }, [searchParams]);
 
+  const setTab = (t: DashboardTab) => setSearchParams({ tab: t });
+
   return (
-    <div className="mx-auto w-full max-w-[1400px]">
-      <div className="rounded-xl border border-zinc-200/80 bg-white/90 p-4 shadow-lg shadow-zinc-900/5 backdrop-blur-xl sm:rounded-2xl sm:p-6 lg:p-7">
-        <div className="mb-5 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
-          <div className="min-w-0">
-            <h1 className="text-lg font-bold tracking-tight text-zinc-900 sm:text-xl md:text-2xl">
-              Workspace
-            </h1>
-            <p className="mt-1 max-w-xl text-sm leading-relaxed text-zinc-600">
-              Users, artists, songs — pagination and validation on every form.
-            </p>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+
+      <div className="dash-root">
+        <div className="dash-wrap">
+
+          {/* ── Header ── */}
+          <div className="dash-header">
+            <div>
+              <h1 className="dash-title">
+                Workspace <em>Overview</em>
+              </h1>
+              <p className="dash-sub">
+                Manage your network of users, catalog of artists, and their extensive song collections.
+              </p>
+            </div>
+            <div className="dash-badge">Admin Panel</div>
           </div>
-          <div className="inline-flex h-9 shrink-0 items-center self-start rounded-full border border-teal-200/80 bg-teal-50/90 px-3 text-[10px] font-bold uppercase tracking-wider text-teal-800 sm:px-4 sm:text-xs">
-            AMS · Admin
+
+          {/* ── Tab switcher ── */}
+          <div className="dash-tabs">
+            <button
+              className={`dash-tab${tab === "users" ? " dash-tab--active" : ""}`}
+              onClick={() => setTab("users")}
+            >
+              System Users
+            </button>
+            <button
+              className={`dash-tab${tab === "artists" ? " dash-tab--active" : ""}`}
+              onClick={() => setTab("artists")}
+            >
+              Artists Portfolio
+            </button>
           </div>
+
+          <div className="dash-panel">
+            {tab === "users" ? <UserManagement /> : <ArtistManagement />}
+          </div>
+
         </div>
-
-        <Tabs
-          value={tab}
-          onChange={(v) => {
-            const next = v === "artists" ? "artists" : "users";
-            setSearchParams({ tab: next });
-          }}
-          variant="pills"
-          radius="lg"
-          keepMounted={false}
-          color="teal"
-          classNames={{
-            root: "w-full min-w-0",
-            list: "mb-5 w-full min-w-0 gap-1.5 rounded-xl border border-zinc-200/70 bg-zinc-100/90 p-1 sm:gap-2 sm:p-1.5 flex-nowrap overflow-x-auto sm:overflow-visible",
-            tab: "shrink-0 grow basis-0 rounded-lg px-4 py-2.5 text-center text-xs font-semibold min-h-11 sm:min-h-0 sm:px-5 sm:text-sm",
-          }}
-        >
-          <Tabs.List grow className="flex sm:flex-1">
-            <Tabs.Tab value="users">Users</Tabs.Tab>
-            <Tabs.Tab value="artists">Artists</Tabs.Tab>
-          </Tabs.List>
-
-          <Tabs.Panel value="users" pt={0}>
-            <UserManagement />
-          </Tabs.Panel>
-
-          <Tabs.Panel value="artists" pt={0}>
-            <ArtistManagement />
-          </Tabs.Panel>
-        </Tabs>
       </div>
-    </div>
+    </>
   );
 }

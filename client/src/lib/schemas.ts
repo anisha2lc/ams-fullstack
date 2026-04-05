@@ -66,8 +66,8 @@ export function toArtistApiPayload(values: ArtistFormValues): Record<string, unk
     dob: values.dob,
     gender: values.gender,
     address: values.address,
-    first_release_year: values.first_release_year,
-    no_of_albums_released: values.no_of_albums_released,
+    first_release_year: Number(values.first_release_year),
+    no_of_albums_released: Number(values.no_of_albums_released),
   };
   if (user_id !== undefined) payload.user_id = user_id;
   return payload;
