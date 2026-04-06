@@ -265,7 +265,7 @@ export function ArtistManagement() {
       </div>
 
       {data && data.pagination.totalPages > 1 && (
-        <Group justify="center" mt="xl">
+        <Group justify="center" mt="xl" pb={'lg'}>
           <Pagination
             total={data.pagination.totalPages}
             value={page}
