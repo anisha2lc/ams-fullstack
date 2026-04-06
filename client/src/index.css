@@ -4,6 +4,9 @@
 
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&display=swap');
+
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --radius-ams: 1rem;
@@ -48,7 +51,6 @@ body {
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
 
 @keyframes fadeUp {
   from {
@@ -157,7 +159,6 @@ body {
   filter: blur(60px);
 }
 
-/* Rotating decorative ring behind monogram */
 .monogram-wrap {
   position: relative;
   width: 56px;
@@ -463,7 +464,6 @@ body {
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&display=swap');
 
 .dash-root {
   font-family: 'DM Mono', monospace;
