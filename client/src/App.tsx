@@ -62,7 +62,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme} defaultColorScheme="light">
         <ModalsProvider>
-          <Notifications position="top-right" zIndex={10000} />
+          <Notifications position="top-right" zIndex={5000} />
           <AuthProvider>
             <BrowserRouter>
               <Routes>

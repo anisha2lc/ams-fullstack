@@ -140,7 +140,7 @@ export function RegisterPage() {
 
                 <PasswordInput
                   label="Password"
-                  placeholder="••••••••"
+                  placeholder="Password"
                   required
                   key={form.key("password")}
                   {...form.getInputProps("password")}
@@ -148,7 +148,7 @@ export function RegisterPage() {
 
                 <TextInput
                   label="Phone"
-                  placeholder="+1 555 000 0000"
+                  placeholder="9876543210"
                   required
                   key={form.key("phone")}
                   {...form.getInputProps("phone")}

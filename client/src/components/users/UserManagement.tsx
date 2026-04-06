@@ -127,9 +127,9 @@ export function UserManagement() {
     });
   };
 
-  const rows = data?.data.map((u) => (
-      <Table.Tr key={u.id}>
-      <Table.Td className="hidden sm:table-cell">{u.id}</Table.Td>
+  const rows = data?.data.map((u, index) => (
+    <Table.Tr key={u.id}>
+      <Table.Td className="hidden sm:table-cell">{(page - 1) * PAGE_SIZE + index + 1}</Table.Td>
       <Table.Td>
         {u.first_name} {u.last_name}
       </Table.Td>
@@ -201,7 +201,7 @@ export function UserManagement() {
           >
             <Table.Thead>
               <Table.Tr>
-                <Table.Th className="hidden sm:table-cell">ID</Table.Th>
+                <Table.Th className="hidden sm:table-cell">S.N.</Table.Th>
                 <Table.Th>Name</Table.Th>
                 <Table.Th>Email</Table.Th>
                 <Table.Th>Role</Table.Th>
@@ -215,7 +215,7 @@ export function UserManagement() {
       </div>
 
       {data && data.pagination.totalPages > 1 && (
-        <Group justify="center" mt="xl">
+        <Group justify="center" mt="xl" pb={"lg"}>
           <Pagination
             total={data.pagination.totalPages}
             value={page}

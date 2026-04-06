@@ -89,7 +89,7 @@ export function LoginPage() {
                 />
                 <PasswordInput
                   label="Password"
-                  placeholder="••••••••"
+                  placeholder="Password"
                   required
                   key={form.key("password")}
                   {...form.getInputProps("password")}
